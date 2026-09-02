@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Private Website</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #101114;
+            --card: #1b1d22;
+            --card2: #22252b;
+            --text: #ffffff;
+            --muted: #a9adb7;
+            --blue: #3478f6;
+            --blue-hover: #2463d8;
+            --red: #e5484d;
+            --border: #30343c;
+        }
+
+        body.light {
+            --bg: #f2f4f8;
+            --card: #ffffff;
+            --card2: #f0f2f5;
+            --text: #17181b;
+            --muted: #666b75;
+            --border: #d8dce3;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        /* ================= LOGIN ================= */
+
+        #login {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--card);
+            width: 380px;
+            max-width: 100%;
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        .login-box h1 {
+            margin-top: 0;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px;
+            margin: 15px 0;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--card2);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+
+        button {
+            border: none;
+            padding: 11px 17px;
+            border-radius: 9px;
+            background: var(--blue);
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: var(--blue-hover);
+            transform: translateY(-1px);
+        }
+
+        #error {
+            display: none;
+            color: #ff5c61;
+        }
+
+        /* ================= WEBSITE ================= */
+
+        #website {
+            display: none;
+        }
+
+        /* HEADER */
+
+        header {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-button {
+            padding: 10px 12px;
+        }
+
+        .logout {
+            background: var(--red);
+        }
+
+        .logout:hover {
+            background: #bd3036;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 900px;
+            max-width: calc(100% - 30px);
+            margin: 30px auto;
+        }
+
+        /* CREATE POST */
+
+        .create-box {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .create-box h2 {
+            margin-top: 0;
+        }
+
+        input,
+        textarea {
+            font-family: Arial, sans-serif;
+        }
+
+        .post-title-input {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--card2);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 160px;
+            resize: vertical;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--card2);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .publish-button {
+            margin-top: 12px;
+        }
+
+        /* SEARCH */
+
+        .search-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-area input {
+            flex: 1;
+            padding: 13px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* POSTS */
+
+        .posts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .posts-header h2 {
+            margin: 0;
+        }
+
+        .clear-button {
+            background: var(--red);
+        }
+
+        .post {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .post h3 {
+            margin: 0 0 7px;
+            font-size: 22px;
+        }
+
+        .post-date {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .post-content {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .post-buttons {
+            margin-top: 18px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-button {
+            background: #e09f22;
+        }
+
+        .edit-button:hover {
+            background: #bd8217;
+        }
+
+        .delete-button {
+            background: var(--red);
+        }
+
+        .delete-button:hover {
+            background: #bd3036;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            background: var(--card);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .header-buttons button {
+                font-size: 13px;
+                padding: 8px;
+            }
+
+            .container {
+                margin-top: 20px;
+            }
+
+            .create-box,
+            .post {
+                padding: 18px;
+            }
+
+            .posts-header {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .search-area {
+                flex-direction: column;
+            }
+
+            .post-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= LOGIN ================= -->
+
+    <div id="login">
+
+        <div class="login-box">
+
+            <h1>🔐 Private Website</h1>
+
+            <p>Enter the access code to continue.</p>
+
+            <input type="password" id="code" placeholder="Access code"
+                onkeydown="if(event.key === 'Enter') checkCode()">
+
+            <button onclick="checkCode()">
+                Enter Website
+            </button>
+
+            <p id="error">
+                ❌ Incorrect code!
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= WEBSITE ================= -->
+
+    <div id="website">
+
+        <!-- HEADER -->
+
+        <header>
+
+            <div class="logo">
+                🏠 My Website
+            </div>
+
+            <div class="header-buttons">
+
+                <button class="icon-button" onclick="toggleTheme()" id="themeButton">
+                    🌙
+                </button>
+
+                <button class="icon-button logout" onclick="logout()">
+                    🔒 Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- MAIN -->
+
+        <main class="container">
+
+            <!-- CREATE POST -->
+
+            <section class="create-box">
+
+                <h2>📝 Create a Post</h2>
+
+                <input class="post-title-input" id="postTitle" placeholder="Post title...">
+
+                <textarea id="postContent" placeholder="Write your post here..."></textarea>
+
+                <button class="publish-button" onclick="createPost()">
+                    📤 Publish Post
+                </button>
+
+            </section>
+
+
+            <!-- POSTS -->
+
+            <div class="posts-header">
+
+                <h2>📚 Posts</h2>
+
+                <button class="clear-button" onclick="clearPosts()">
+                    🧹 Clear All
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-area">
+
+                <input id="search" placeholder="🔎 Search posts..." oninput="displayPosts()">
+
+            </div>
+
+
+            <!-- POSTS CONTAINER -->
+
+            <div id="postsContainer"></div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        /* =====================================================
+           SETTINGS
+        ===================================================== */
+
+        // 🔐 CHANGE YOUR PASSWORD HERE
+        const correctCode = "1234";
+
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
+
+        function checkCode() {
+
+            const enteredCode =
+                document.getElementById("code").value;
+
+            const error =
+                document.getElementById("error");
+
+            if (enteredCode === correctCode) {
+
+                document.getElementById("login").style.display = "none";
+
+                document.getElementById("website").style.display = "block";
+
+                error.style.display = "none";
+
+                displayPosts();
+
+            } else {
+
+                error.style.display = "block";
+
+            }
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        function logout() {
+
+            document.getElementById("website").style.display = "none";
+
+            document.getElementById("login").style.display = "flex";
+
+            document.getElementById("code").value = "";
+
+            document.getElementById("error").style.display = "none";
+        }
+
+
+        /* =====================================================
+           CREATE POST
+        ===================================================== */
+
+        function createPost() {
+
+            const title =
+                document.getElementById("postTitle").value.trim();
+
+            const content =
+                document.getElementById("postContent").value.trim();
+
+            if (!title) {
+                alert("Please enter a title.");
+                return;
+            }
+
+            if (!content) {
+                alert("Please write something in the post.");
+                return;
+            }
+
+            const posts = getPosts();
+
+            const newPost = {
+
+                id: Date.now(),
+
+                title: title,
+
+                content: content,
+
+                date: new Date().toLocaleString()
+
+            };
+
+            posts.unshift(newPost);
+
+            savePosts(posts);
+
+            document.getElementById("postTitle").value = "";
+
+            document.getElementById("postContent").value = "";
+
+            displayPosts();
+
+            alert("✅ Post published!");
+
+        }
+
+
+        /* =====================================================
+           GET POSTS
+        ===================================================== */
+
+        function getPosts() {
+
+            const saved =
+                localStorage.getItem("myWebsitePosts");
+
+            if (!saved) {
+                return [];
+            }
+
+            return JSON.parse(saved);
+        }
+
+
+        /* =====================================================
+           SAVE POSTS
+        ===================================================== */
+
+        function savePosts(posts) {
+
+            localStorage.setItem(
+                "myWebsitePosts",
+                JSON.stringify(posts)
+            );
+
+        }
+
+
+        /* =====================================================
+           DISPLAY POSTS
+        ===================================================== */
+
+        function displayPosts() {
+
+            const container =
+                document.getElementById("postsContainer");
+
+            const search =
+                document.getElementById("search")
+                    .value
+                    .toLowerCase();
+
+            let posts = getPosts();
+
+            posts = posts.filter(post =>
+
+                post.title.toLowerCase().includes(search) ||
+
+                post.content.toLowerCase().includes(search)
+
+            );
+
+            container.innerHTML = "";
+
+
+            if (posts.length === 0) {
+
+                container.innerHTML = `
+            <div class="empty">
+                <h3>📭 No posts found</h3>
+                <p>Create a post to get started.</p>
+            </div>
+        `;
+
+                return;
+            }
+
+
+            posts.forEach(post => {
+
+                const postElement =
+                    document.createElement("div");
+
+                postElement.className = "post";
+
+                postElement.innerHTML = `
+
+            <h3>${escapeHTML(post.title)}</h3>
+
+            <div class="post-date">
+                📅 ${escapeHTML(post.date)}
+            </div>
+
+            <div class="post-content">
+                ${escapeHTML(post.content)}
+            </div>
+
+            <div class="post-buttons">
+
+                <button
+                    class="edit-button"
+                    onclick="editPost(${post.id})"
+                >
+                    ✏️ Edit
+                </button>
+
+                <button
+                    class="delete-button"
+                    onclick="deletePost(${post.id})"
+                >
+                    🗑️ Delete
+                </button>
+
+            </div>
+        `;
+
+                container.appendChild(postElement);
+
+            });
+
+        }
+
+
+        /* =====================================================
+           EDIT POST
+        ===================================================== */
+
+        function editPost(id) {
+
+            const posts = getPosts();
+
+            const post =
+                posts.find(p => p.id === id);
+
+            if (!post) return;
+
+
+            const newTitle =
+                prompt("Edit the title:", post.title);
+
+            if (newTitle === null) return;
+
+
+            const newContent =
+                prompt("Edit the post:", post.content);
+
+            if (newContent === null) return;
+
+
+            if (newTitle.trim() === "") {
+
+                alert("The title cannot be empty.");
+
+                return;
+
+            }
+
+
+            if (newContent.trim() === "") {
+
+                alert("The post cannot be empty.");
+
+                return;
+
+            }
+
+
+            post.title = newTitle.trim();
+
+            post.content = newContent.trim();
+
+            post.date =
+                new Date().toLocaleString();
+
+
+            savePosts(posts);
+
+            displayPosts();
+
+        }
+
+
+        /* =====================================================
+           DELETE POST
+        ===================================================== */
+
+        function deletePost(id) {
+
+            const confirmed =
+                confirm("Are you sure you want to delete this post?");
+
+            if (!confirmed) return;
+
+
+            let posts = getPosts();
+
+            posts =
+                posts.filter(post => post.id !== id);
+
+            savePosts(posts);
+
+            displayPosts();
+
+        }
+
+
+        /* =====================================================
+           CLEAR ALL POSTS
+        ===================================================== */
+
+        function clearPosts() {
+
+            const posts = getPosts();
+
+            if (posts.length === 0) {
+
+                alert("There are no posts to delete.");
+
+                return;
+
+            }
+
+
+            const confirmed =
+                confirm(
+                    "⚠️ Are you sure you want to delete ALL posts?"
+                );
+
+            if (!confirmed) return;
+
+
+            localStorage.removeItem("myWebsitePosts");
+
+            displayPosts();
+
+        }
+
+
+        /* =====================================================
+           DARK / LIGHT MODE
+        ===================================================== */
+
+        function toggleTheme() {
+
+            document.body.classList.toggle("light");
+
+            const lightMode =
+                document.body.classList.contains("light");
+
+            localStorage.setItem(
+                "websiteTheme",
+                lightMode ? "light" : "dark"
+            );
+
+            updateThemeButton();
+
+        }
+
+
+        function updateThemeButton() {
+
+            const button =
+                document.getElementById("themeButton");
+
+            const lightMode =
+                document.body.classList.contains("light");
+
+            button.textContent =
+                lightMode ? "☀️" : "🌙";
+
+        }
+
+
+        /* =====================================================
+           LOAD THEME
+        ===================================================== */
+
+        function loadTheme() {
+
+            const theme =
+                localStorage.getItem("websiteTheme");
+
+            if (theme === "light") {
+
+                document.body.classList.add("light");
+
+            }
+
+            updateThemeButton();
+
+        }
+
+
+        /* =====================================================
+           SECURITY HELPER
+        ===================================================== */
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = text;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        loadTheme();
+
+    </script>
+
+</body>
+
+</html>
+
+    
