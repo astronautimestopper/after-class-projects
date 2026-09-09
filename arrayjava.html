@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>JavaScript Objects Data Structure and Array</h2>
+    <script>
+        var hero = {
+            name: 'Sentry',
+            age: 'unkown',
+            hobbies: 'unkown',
+            fav_sport: 'unkown'
+        };
+        var color = [ "yellow",  "blue"];
+        document.write(" Hero name is : " + hero.name,
+                "<br>", "Hero's favorite sport is : "
+            + hero.fav_sport);
+            document.write("<br>Before Poping the colors are: " + color.join("^"));
+            document.write("<br>My favorite color is : " + color[3]);
+            color.pop();
+                document.write("<br>After Poping the colors are : " + color.join("*"));
+     </script>           
+</body>
+</html>
