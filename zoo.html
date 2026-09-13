@@ -1,0 +1,118 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Animal Zoo</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #dff7f5;
+            text-align: center;
+            color: #222;
+        }
+
+        h1 {
+            color: #e88bb5;
+        }
+
+        #zoo {
+            width: 420px;
+            border: 3px solid #e88bb5;
+            border-radius: 12px;
+            background: white;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .zone {
+            border: 2px solid #8ccfc9;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            text-align: left;
+        }
+
+        button {
+            background-color: #e88bb5;
+            color: white;
+            border: 0;
+            border-radius: 20px;
+            padding: 10px 22px;
+        }
+
+        #output {
+            margin: 20px auto;
+            width: 420px;
+            padding: 10px;
+            border: 2px dashed #e88bb5;
+            background: white;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>My Animal Zoo</h1>
+
+    <p>Explore my axolotl, bee, and otter zones!</p>
+
+    <div id="zoo">
+
+        <div class="zone" id="axolotlZone">
+            <h2>Axolotl Zone</h2>
+            <p>Animal: Axolotl</p>
+        </div>
+
+        <div class="zone" id="beeZone">
+            <h2>Bee Zone</h2>
+            <p>Animal: Bee</p>
+        </div>
+
+        <div class="zone" id="otterZone">
+            <h2>Otter Zone</h2>
+            <p>Animal: Otter</p>
+        </div>
+
+    </div>
+
+    <button onclick="manageZoo()">Manage Zoo</button>
+
+    <div id="output">Zoo information will appear here.</div>
+
+    <script>
+function manageZoo() {
+
+  var zoo = document.getElementById("zoo");
+  var axolotlZone = document.getElementById("axolotlZone");
+  var beeZone = document.getElementById("beeZone");
+  var otterZone = document.getElementById("otterZone");
+  var output = document.getElementById("output");
+
+  var parentNodeName = axolotlZone.parentNode.id;
+  var firstChildZone = zoo.children[0].id;
+  var nextSiblingZone = axolotlZone.nextElementSibling.id;
+  var previousSiblingZone = otterZone.previousElementSibling.id;
+
+  axolotlZone.style.backgroundColor = "#ffe1ee";
+  beeZone.style.backgroundColor = "#fff3a8";
+  otterZone.style.backgroundColor = "#d6c2a5";
+
+  axolotlZone.querySelector("h2").innerHTML = "Updated Axolotl Zone";
+  beeZone.querySelector("h2").innerHTML = "Updated Bee Zone";
+  otterZone.querySelector("h2").innerHTML = "Updated Otter Zone";
+
+  output.innerHTML =
+    "<strong>DOM Information:</strong><br>" +
+    "Parent of Axolotl Zone: " + parentNodeName + "<br>" +
+    "First child of Zoo: " + firstChildZone + "<br>" +
+    "Next sibling of Axolotl: " + nextSiblingZone + "<br>" +
+    "Previous sibling of Otter: " + previousSiblingZone;
+}
+    </script>
+
+</body>
+
+</html>
