@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Birthday Countdown</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            color: #3b2f2f;
+            text-align: center;
+        }
+
+        .birthday-card {
+            width: 520px;
+            background: white;
+            border: 4px solid #ff6f91;
+            border-radius: 20px;
+            margin: 40px auto;
+            padding: 25px;
+        }
+
+        h1 {
+            color: #ff477e;
+        }
+
+        button {
+            background: #ff477e;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: #fff0f5;
+            border: 2px dashed #ff6f91;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        #daysBox {
+            font-size: 42px;
+            font-weight: bold;
+            color: #7209b7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="birthday-card">
+        <h1>My Birthday Countdown Checker</h1>
+        <p>Click the button to check how many days are left.</p>
+
+        <button onclick="checkBirthday()">Check Birthday</button>
+
+        <h2>Days Left</h2>
+        <div id="daysBox">?</div>
+
+        <div class="info-box">
+            <h2>Birthday Result</h2>
+            <p id="result"></p>
+        </div>
+
+        <div class="info-box">
+            <h2>Countdown Review</h2>
+            <p id="countdown"></p>
+        </div>
+    </div>
+
+    <script>
+        function checkBirthday() {
+            let birthdayGift = null;
+            let birthdayPlan;
+
+            const studentName = "Ali";
+            const birthdayMonth = 12;
+            const birthdayDate = 17;
+
+            let message = "";
+            let countdownText = "";
+
+            let today = new Date();
+            let currentYear = today.getFullYear();
+            let birthday = new Date(currentYear, birthdayMonth - 1, birthdayDate);
+
+            if (birthday < today) {
+                birthday = new Date(currentYear + 1, birthdayMonth - 1, birthdayDate);
+            }
+
+            let timeDifference = birthday - today;
+            let daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+            if (daysLeft === 0) {
+                message = "Happy Birthday, " + studentName + "!";
+            } else if (daysLeft <= 7) {
+                message = "Your birthday is almost here!";
+            } else {
+                message = "Your birthday is coming soon!";
+            }
+
+            let finalMessage = "Student Name: " + studentName + "<br>";
+            finalMessage += "Today's Date: " + today.toDateString() + "<br>";
+            finalMessage += "Birthday Date: " + birthday.toDateString() + "<br>";
+            finalMessage += "Message: " + message + "<br><br>";
+            finalMessage += "Birthday Gift: " + birthdayGift + "<br>";
+            finalMessage += "Birthday Plan: " + birthdayPlan;
+
+            document.getElementById("daysBox").innerHTML = daysLeft;
+            document.getElementById("result").innerHTML = finalMessage;
+
+            let day = 1;
+
+            while (day <= 5) {
+                countdownText += "Countdown check " + day +
+                    ": Birthday excitement loading...<br>";
+                day++;
+            }
+
+            document.getElementById("countdown").innerHTML = countdownText;
+        }
+    </script>
+
+</body>
+
+</html>
+```
